@@ -37,19 +37,6 @@ def call_cmd(cmd, echo_cmd=True, exit_on_error=True):
     return result
 
 
-def call_cmd_realtime(cmd, echo_cmd=True):
-    if echo_cmd:
-        click.echo(green(cmd))
-    process = subprocess.Popen(
-        cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True
-    )
-    while True:
-        line = process.stdout.readline().rstrip()
-        if not line and process.poll() is not None:
-            break
-        yield line
-
-
 def get_hack_dir():
     return os.path.dirname(os.path.abspath(__file__))
 

@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import click
+import os
 from _helpers import (
-    call_cmd_realtime,
+    green,
     cyan,
     get_from_image,
     get_hack_dir,
@@ -25,10 +26,9 @@ def build_image(image_type, nocache):
             'docker build --tag "{BASE_IMAGE_TAG}" --build-arg '
             '"FROM_IMAGE={FROM_IMAGE}"   "{DIR}/../."'
         )
-    for line in call_cmd_realtime(
-        cmd.format(BASE_IMAGE_TAG=image_tag, FROM_IMAGE=from_image, DIR=hack_dir)
-    ):
-        click.echo(line)
+    cmd = cmd.format(BASE_IMAGE_TAG=image_tag, FROM_IMAGE=from_image, DIR=hack_dir)
+    click.echo(green(cmd))
+    os.system(cmd)
 
 
 @click.command()
